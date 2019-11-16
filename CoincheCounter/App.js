@@ -6,109 +6,83 @@
  * @flow
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import {
-  SafeAreaView,
+  Keyboard,
   StyleSheet,
-  ScrollView,
   View,
+  TextInput,
   Text,
-  StatusBar,
+  Button,
+  TouchableWithoutFeedback,
+
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const DismissKeyboard = ({ children }) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {children}
+    </TouchableWithoutFeedback>
+);
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+export default class App
+    extends Component<
+        {},
+        {
+          Team1count: Number,
+          Team2count : Number,
+          Team1name: String,
+          Team12name: String,
+          CurrentRound: number,
+        }
+        > {
+  state = {
+    Team1count: 0,
+    Team1name: 'Team 1',
+    Team2count: 0,
+    Team2name: 'Team 2',
+    CurrentRound: 0,
+  };
+
+  render() {
+    return (
+        <DismissKeyboard>
+        <View style={styles.container}>
+          <TextInput style={styles.team1name} value={this.state.Team1name} onChange={name => this.setState({Team1name: name.nativeEvent.text})}/>
+          <Text>{this.state.Team1count}</Text>
+          <TextInput style={styles.team2name} value={this.state.Team2name} onChange={name => this.setState({Team2name: name.nativeEvent.text})}/>
+          <Text>{this.state.Team2count}</Text>
+          <Button
+              title='End Game'
+              onPress={() => this.setState({ Team1count: 0 , Team2count: 0 , CurrentRound: 0 })}
+          />
+          <TextInput style={styles.counter} keyboardType={'numeric'} numeric value={this.state.CurrentRound.toString()} onChange={score => this.setState({CurrentRound: Number(score.nativeEvent.text)})}/>
+          <Button
+              title={this.state.Team1name}
+              onPress={() => this.setState({ Team1count: this.state.Team1count + this.state.CurrentRound , CurrentRound: 0 })}
+          />
+            <Button
+                title={this.state.Team2name}
+                onPress={() => this.setState({ Team2count: this.state.Team2count + this.state.CurrentRound , CurrentRound: 0 })}
+            />
+        </View>
+  </DismissKeyboard>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  team1name: {
+    textAlign: 'left',
   },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
+  team2name: {
     textAlign: 'right',
   },
+  counter: {
+    marginTop: '20%',
+  },
 });
-
-export default App;
