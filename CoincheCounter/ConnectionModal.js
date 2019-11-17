@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
-import {Modal, TextInput, TouchableHighlight, View, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {
+  Modal,
+  TextInput,
+  TouchableHighlight,
+  View,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Button,
+} from 'react-native';
 
 const DismissKeyboard = ({children}) => (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -8,8 +17,24 @@ const DismissKeyboard = ({children}) => (
 );
 
 class ModalExample extends Component {
+  state = {
+    username: '',
+    password: '',
+  };
 
-
+  sendInfo = () => {
+      fetch('http://localhost:4000/api/users/register', {
+          method: "POST",
+          headers: {
+              'Content-type': 'application/json'
+          },
+          body: JSON.stringify(this.state)
+      })
+          .then((response) => response.json())
+          .then((result) => {
+              console.log(result)
+          })
+  };
 
     render() {
         return (
@@ -23,12 +48,16 @@ class ModalExample extends Component {
                     }}>
                     <View style={{marginTop: 22}}>
                         <View>
-                            <TextInput placeholder={'Username'}></TextInput>
-                            <TextInput placeholder={'Password'}></TextInput>
+              <TextInput placeholder={'Username'} value={this.state.username} />
+              <TextInput placeholder={'Password'} value={this.state.password} />
+              <Button
+                color="#d63031"
+                title="Submit"
+                onPress={this.sendInfo()}
+              />
                         </View>
                     </View>
                 </Modal>
-
             </View>
         );
     }
