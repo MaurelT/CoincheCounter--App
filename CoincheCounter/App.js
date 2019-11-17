@@ -7,6 +7,8 @@
  */
 
 import React, {Component} from 'react';
+import Connection from './ConnectionModal';
+
 import {
   Keyboard,
   StyleSheet,
@@ -31,6 +33,7 @@ export default class App extends Component<
     Team1name: String,
     Team12name: String,
     CurrentRound: number,
+    modalVisible: boolean,
   },
 > {
   state = {
@@ -39,6 +42,7 @@ export default class App extends Component<
     Team2count: 0,
     Team2name: 'Team 2',
     CurrentRound: 0,
+    modalVisible: false,
   };
 
   render() {
@@ -73,6 +77,7 @@ export default class App extends Component<
           </View>
           <View style={styles.content}>
             <View style={styles.addPoint}>
+              <Connection modalVisible={this.state.modalVisible}/>
               <TextInput
                 style={styles.counter}
                 keyboardType={'numeric'}
@@ -117,7 +122,7 @@ export default class App extends Component<
                 color="#778ca3"
                 title="End Game"
                 onPress={() =>
-                  this.setState({Team1count: 0, Team2count: 0, CurrentRound: 0})
+                  this.setState({Team1count: 0, Team2count: 0, CurrentRound: 0, modalVisible: true})
                 }
               />
             </View>
