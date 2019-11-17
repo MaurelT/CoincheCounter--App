@@ -9,7 +9,14 @@ const DismissKeyboard = ({children}) => (
 
 class ModalExample extends Component {
 
-
+    state = {
+        Team1count: 0,
+        Team1name: 'Team 1',
+        Team2count: 0,
+        Team2name: 'Team 2',
+        CurrentRound: 0,
+        modalVisible: false,
+    };
 
     render() {
         return (
