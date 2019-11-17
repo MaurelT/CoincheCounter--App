@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.get('/users', users.findAll);
 
     // Retrieve a single User with pseudo and password
-    app.get('/users/connect/:pseudo/:password', users.findByPseudoAndPassword);
+    app.get('/users/connect', users.findByPseudoAndPassword);
 
     // Delete a User with userID
     app.delete('/users/delete/:userId', users.delete);

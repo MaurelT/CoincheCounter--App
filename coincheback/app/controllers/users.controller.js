@@ -53,16 +53,16 @@ saveUser = (users, res) => {
 exports.findByPseudoAndPassword = (req, res) => {
 
     const userCreate = new users({
-        pseudo: req.params.pseudo,
-        password: req.params.password,
+        pseudo: req.body.pseudo,
+        password: req.body.password,
     });
 
-    users.find({pseudo: req.params.pseudo})
+    users.find({pseudo: req.body.pseudo})
         .then(user => {
                 if (!user[0]) {
                     saveUser(userCreate, res)
                 } else {
-                    if (user[0].password !== req.params.password) {
+                    if (user[0].password !== req.body.password) {
                         return res.status(404).send({
                             message: "Wrong password"
                         });
