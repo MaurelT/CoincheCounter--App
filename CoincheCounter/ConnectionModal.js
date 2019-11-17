@@ -1,14 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Modal,
-  TextInput,
-  TouchableHighlight,
-  View,
-  Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Button,
-} from 'react-native';
+import {Modal, TextInput, TouchableHighlight, View, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 
 const DismissKeyboard = ({children}) => (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -58,6 +49,7 @@ class ModalExample extends Component {
                         </View>
                     </View>
                 </Modal>
+
             </View>
         );
     }

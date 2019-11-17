@@ -8,6 +8,7 @@
 
 import React, {Component} from 'react';
 import Connection from './ConnectionModal';
+import History from './MatchHistory';
 
 import {
   Keyboard,
@@ -33,7 +34,8 @@ export default class App extends Component<
     Team1name: String,
     Team12name: String,
     CurrentRound: number,
-    modalVisible: boolean,
+    modalVisibleConnection: boolean,
+    modalVisibleHistory: boolean,
   },
 > {
   state = {
@@ -42,7 +44,8 @@ export default class App extends Component<
     Team2count: 0,
     Team2name: 'Team 2',
     CurrentRound: 0,
-    modalVisible: false,
+    modalVisibleConnection: false,
+    modalVisibleHistory: false,
   };
 
   render() {
@@ -77,7 +80,8 @@ export default class App extends Component<
           </View>
           <View style={styles.content}>
             <View style={styles.addPoint}>
-              <Connection modalVisible={this.state.modalVisible}/>
+              <Connection modalVisible={this.state.modalVisibleConnection}/>
+              <History modalVisible={this.state.modalVisibleHistory}/>
               <TextInput
                 style={styles.counter}
                 keyboardType={'numeric'}
@@ -122,8 +126,16 @@ export default class App extends Component<
                 color="#778ca3"
                 title="End Game"
                 onPress={() =>
-                  this.setState({Team1count: 0, Team2count: 0, CurrentRound: 0, modalVisible: true})
+                  this.setState({Team1count: 0, Team2count: 0, CurrentRound: 0, modalVisibleConnection: true})
                 }
+              />
+              <Button
+                  style={styles.textEndGame}
+                  color="#778ca3"
+                  title="History"
+                  onPress={() =>
+                      this.setState({modalVisibleHistory: true})
+                  }
               />
             </View>
           </View>
