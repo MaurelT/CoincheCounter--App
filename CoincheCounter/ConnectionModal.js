@@ -1,10 +1,18 @@
 import React, {Component} from 'react';
-import {Modal, TextInput, TouchableHighlight, View, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {
+  Modal,
+  TextInput,
+  TouchableHighlight,
+  View,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 
 const DismissKeyboard = ({children}) => (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        {children}
-    </TouchableWithoutFeedback>
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
 );
 
 class ModalExample extends Component {
@@ -14,31 +22,31 @@ class ModalExample extends Component {
   };
 
   sendInfo = () => {
-      fetch('http://localhost:4000/api/users/register', {
-          method: "POST",
-          headers: {
-              'Content-type': 'application/json'
-          },
-          body: JSON.stringify(this.state)
-      })
-          .then((response) => response.json())
-          .then((result) => {
-              console.log(result)
-          })
+    fetch('http://localhost:4000/api/users/register', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(this.state),
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+      });
   };
 
-    render() {
-        return (
-            <View style={{marginTop: 22}}>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.props.modalVisible}
-                    onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
-                    }}>
-                    <View style={{marginTop: 22}}>
-                        <View>
+  render() {
+    return (
+      <View style={{marginTop: 22}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.props.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+            <View>
               <TextInput placeholder={'Username'} value={this.state.username} />
               <TextInput placeholder={'Password'} value={this.state.password} />
               <Button
@@ -46,13 +54,12 @@ class ModalExample extends Component {
                 title="Submit"
                 onPress={this.sendInfo()}
               />
-                        </View>
-                    </View>
-                </Modal>
-
             </View>
-        );
-    }
+          </View>
+        </Modal>
+      </View>
+    );
+  }
 }
 
 export default ModalExample;
