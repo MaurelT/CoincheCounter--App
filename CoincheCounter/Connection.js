@@ -18,6 +18,7 @@ import {
   Keyboard,
   StyleSheet,
 } from 'react-native';
+import Storage from './Storage';
 
 const DismissKeyboard = ({children}) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -25,7 +26,12 @@ const DismissKeyboard = ({children}) => (
   </TouchableWithoutFeedback>
 );
 
-export default class Connection extends Component {
+interface ConnectionState {
+  username: string;
+  password: string;
+}
+
+export default class Connection extends Component<{}, ConnectionState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,16 +41,23 @@ export default class Connection extends Component {
   }
 
   sendInfo = () => {
-    fetch('http://localhost:4000/api/users/register', {
+    fetch('http://localhost:3000/users/connect', {
       method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
+      header: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(this.state),
+      body: JSON.stringify({
+        pseudo: this.state.username,
+        password: this.state.password,
+      }),
     })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result);
+      .then(response => {
+        alert(response);
+      })
+      .catch(error => {
+        console.log(error);
+        alert(error);
       });
   };
 
@@ -53,7 +66,6 @@ export default class Connection extends Component {
       <View style={styles.container}>
         <View style={styles.closeView}>
           <Button
-            style={styles.buttonStyle}
             color="#d63031"
             title="Close"
             onPress={() => this.props.navigation.navigate('MainGame')}
@@ -65,7 +77,7 @@ export default class Connection extends Component {
               placeholder={'Username'}
               placeholderTextColor="#bdc3c7"
               style={styles.inputText}
-              value={this.state.username.toString()}
+              value={this.state.username}
               onChange={username =>
                 this.setState({username: Number(username.nativeEvent.text)})
               }
@@ -74,7 +86,7 @@ export default class Connection extends Component {
               placeholder={'Password'}
               placeholderTextColor="#bdc3c7"
               style={styles.inputText}
-              value={this.state.password.toString()}
+              value={this.state.password}
               onChange={password =>
                 this.setState({password: Number(password.nativeEvent.text)})
               }
@@ -84,7 +96,7 @@ export default class Connection extends Component {
             style={styles.inputText}
             color="#0984e3"
             title="Submit"
-            onPress={this.sendInfo()}
+            onPress={() => this.sendInfo()}
           />
         </View>
       </View>
@@ -101,9 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row-reverse',
     alignItems: 'center',
-  },
-  buttonStyle: {
-    marginRight: 100,
+    marginLeft: 15,
   },
   inputBox: {
     flex: 9,

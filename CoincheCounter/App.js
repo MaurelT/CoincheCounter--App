@@ -15,8 +15,8 @@ import History from './MatchHistory';
 
 const MainNavigator = createStackNavigator(
   {
-    MainGame: {screen: MainGame},
     Connection: {screen: Connection},
+    MainGame: {screen: MainGame},
     History: {screen: History},
   },
   {

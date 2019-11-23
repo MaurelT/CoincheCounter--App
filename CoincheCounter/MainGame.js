@@ -16,6 +16,7 @@ import {
   Button,
   TouchableWithoutFeedback,
 } from 'react-native';
+import Storage from './Storage';
 
 const DismissKeyboard = ({children}) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -33,12 +34,15 @@ interface GameState {
   modalVisibleHistory: boolean;
 }
 
+let username = Storage._retrieveData('Username');
+alert(JSON.stringify(username));
+
 export default class MainGame extends Component<{}, GameState> {
   constructor(props) {
     super(props);
     this.state = {
       Team1count: 0,
-      Team1name: 'Team 1',
+      Team1name: username.toString(),
       Team2count: 0,
       Team2name: 'Team 2',
       CurrentRound: 0,
