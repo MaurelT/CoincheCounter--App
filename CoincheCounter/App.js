@@ -10,7 +10,7 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import MainGame from './MainGame';
-import Connection from './ConnectionModal';
+import Connection from './Connection';
 import History from './MatchHistory';
 
 const MainNavigator = createStackNavigator(
